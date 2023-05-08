@@ -5,6 +5,9 @@ using UnityEngine.InputSystem;
 
 public class TopDownCharacterController : MonoBehaviour
 {
+    public int maxhealth = 100;
+    public int currenthealth;
+    public healthbar Healthbar;
     //Reference to attached animator
     private Animator animator;
 
@@ -32,6 +35,8 @@ public class TopDownCharacterController : MonoBehaviour
         //Get the attached components so we can use them later
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        currenthealth = maxhealth;
+        Healthbar.setmaxhealth(maxhealth);
     }
 
     /// <summary>
@@ -43,6 +48,11 @@ public class TopDownCharacterController : MonoBehaviour
         //by the speed they're moving
         rb.velocity = playerDirection * (playerSpeed * playerMaxSpeed) * Time.fixedDeltaTime;
     }
+    void takedamage(int damage)
+    {
+        currenthealth -= damage;
+        Healthbar.sethealth(currenthealth);
+    }
 
     public void OnPlayerInputShoot(InputAction.CallbackContext context)
     {
@@ -52,6 +62,10 @@ public class TopDownCharacterController : MonoBehaviour
 
         //Otherwise:
         Debug.Log($"Shoot! {Time.time}", gameObject);
+        if(context.performed)
+        {
+            takedamage(20);
+        }
     }
 
     public void OnPlayerImputSprint(InputAction.CallbackContext context)
