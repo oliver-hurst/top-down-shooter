@@ -41,3 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: character
+    uniqueID: 262919929
+    locked: 0
+  - name: pickup
+    uniqueID: 2648936885
+    locked: 0

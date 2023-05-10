@@ -36,6 +36,7 @@ public class TopDownCharacterController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         currenthealth = maxhealth;
+
         Healthbar.setmaxhealth(maxhealth);
     }
 
@@ -48,10 +49,18 @@ public class TopDownCharacterController : MonoBehaviour
         //by the speed they're moving
         rb.velocity = playerDirection * (playerSpeed * playerMaxSpeed) * Time.fixedDeltaTime;
     }
-    void takedamage(int damage)
+    public void takedamage(int damage)
     {
         currenthealth -= damage;
-        Healthbar.sethealth(currenthealth);
+        if (currenthealth >= maxhealth)
+        {
+            currenthealth = maxhealth;
+            Healthbar.sethealth(maxhealth);
+        }
+        else
+        {
+            Healthbar.sethealth(currenthealth);
+        }
     }
 
     public void OnPlayerInputShoot(InputAction.CallbackContext context)
